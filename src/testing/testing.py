@@ -186,6 +186,8 @@ class SecurityTestPipeline:
 
         results = []
         for attack in attacks:
+            import asyncio
+            await asyncio.sleep(3)
             result = await self.run_single(attack)
             results.append(result)
         return results

@@ -76,6 +76,8 @@ async def run_attacks(agent, runner, prompts=None):
         print(f"\n--- Attack #{attack['id']}: {attack['category']} ---")
         print(f"Input: {attack['input'][:100]}...")
 
+        import asyncio
+        await asyncio.sleep(3)
         try:
             response, _ = await chat_with_agent(agent, runner, attack["input"])
             result = {
