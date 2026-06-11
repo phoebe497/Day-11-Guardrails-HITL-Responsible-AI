@@ -71,13 +71,15 @@ async def run_attacks(agent, runner, prompts=None):
     print("ATTACK RESULTS")
     print("=" * 60)
 
+    import asyncio
     results = []
     for attack in prompts:
         print(f"\n--- Attack #{attack['id']}: {attack['category']} ---")
         print(f"Input: {attack['input'][:100]}...")
 
-        import asyncio
-        await asyncio.sleep(3)
+        # Sleep between requests to avoid hitting Google AI Studio RPM limit
+        await asyncio.sleep(4.0)
+
         try:
             response, _ = await chat_with_agent(agent, runner, attack["input"])
             result = {

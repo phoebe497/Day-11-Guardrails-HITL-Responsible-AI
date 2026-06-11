@@ -1,5 +1,9 @@
 # Day-11-Guardrails-HITL-Responsible-AI
 
+> [!IMPORTANT]
+> - **Họ và tên:** Nguyễn Như Yến Phương
+> - **Mã học viên:** 2A202600616
+
 Day 11 — Guardrails, HITL & Responsible AI: How to make agent applications safe?
 
 ## Objectives

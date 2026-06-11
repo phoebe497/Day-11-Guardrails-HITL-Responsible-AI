@@ -185,9 +185,10 @@ class SecurityTestPipeline:
             attacks = adversarial_prompts
 
         results = []
+        import asyncio
         for attack in attacks:
-            import asyncio
-            await asyncio.sleep(3)
+            # Sleep between requests to avoid hitting rate limits
+            await asyncio.sleep(4.0)
             result = await self.run_single(attack)
             results.append(result)
         return results
