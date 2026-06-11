@@ -151,10 +151,26 @@ async def generate_ai_attacks() -> list:
         List of attack dicts with type, prompt, target, why_it_works
     """
     client = genai.Client()
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=RED_TEAM_PROMPT,
-    )
+    import asyncio
+    retries = 4
+    delay = 2.0
+    response = None
+    for attempt in range(retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash-lite",
+                contents=RED_TEAM_PROMPT,
+            )
+            break
+        except Exception as e:
+            err_msg = str(e).upper()
+            if "429" in err_msg or "RESOURCE_EXHAUSTED" in err_msg:
+                if attempt < retries - 1:
+                    print(f"\n[Rate Limit] Hit 429 in AI generation. Retrying in {delay}s... (Attempt {attempt+1}/{retries})")
+                    await asyncio.sleep(delay)
+                    delay *= 2.0
+                    continue
+            raise e
 
     print("AI-Generated Attack Prompts (Aggressive):")
     print("=" * 60)
